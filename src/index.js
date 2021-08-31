@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import SeasonDisplay from "./SeasonDisplay";
 
 // rules of creating a class components
 // 1. Must be a JavaScript Class // not classes like oop
@@ -29,40 +30,45 @@ import ReactDOM from "react-dom";
 class App extends React.Component {
   // this is not required by react it is specific to javaScript not react
 
-  constructor(props) {
-    super(props); // super a reference to the parents constructor functions
-    // this is the only time we do a direct assingment to this.state
-    // must be called this.state
-    this.state = { lat: null, errMessage: "" }; // we don't know the latitude yet so we need a place holder number with null
+  //   constructor(props) {
+  //     super(props); // super a reference to the parents constructor functions
+  //     // this is the only time we do a direct assingment to this.state
+  //     // must be called this.state
+  //     this.state = { lat: null, errMessage: "" }; // we don't know the latitude yet so we need a place holder number with null
+  //   }
 
+  state = { lat: null, errorMessage: "" }; // this  is the same as the code above since babel takes care of it
+
+  componentDidMount() {
     window.navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log(position.coords.latitude);
-        // we called setState this does not run untill after we fetch our information
-        this.setState({ lat: position.coords.latitude });
-      },
-      (err) => {
-        this.setState({ errMessage: err.message });
-      },
-      // we do not do this.
-      //this.state.lat = position.coords.latitude;
+      (position) => this.setState({ lat: position.coords.latitude }),
+      // we called setState this does not run untill after we fetch our information
+
+      (err) => this.setState({ errMessage: err.message }),
     );
+    // we do not do this.
+    //this.state.lat = position.coords.latitude;
   }
   // life cycle methods
-  //   componentDidMount() {
+  //   componentDidMount() { // single update
   //     console.log("My component was rendered to the screen");
   //   }
-  //   componentDidUpdate() {
+  //   componentDidUpdate() { // gets called every time right after rerender
   //     console.log("my component was just updated = it rerendered!");
   //   }
 
-  // React says we haver to define render and must return jsx!!
+  // React says we have to define render and must return jsx!!
   render() {
     if (this.state.errMessage && !this.state.lat) {
       return <div> err: {this.state.errMessage}</div>;
     }
     if (!this.state.errMessage && this.state.lat) {
-      return <div> Latitude: {this.state.lat} </div>;
+      return (
+        <div>
+          {" "}
+          <SeasonDisplay lat={this.state.lat} />{" "}
+        </div>
+      );
     }
     return <div>Loading.....</div>;
   }
