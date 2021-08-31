@@ -48,6 +48,13 @@ class App extends React.Component {
       //this.state.lat = position.coords.latitude;
     );
   }
+  // life cycle methods
+  //   componentDidMount() {
+  //     console.log("My component was rendered to the screen");
+  //   }
+  //   componentDidUpdate() {
+  //     console.log("my component was just updated = it rerendered!");
+  //   }
 
   // React says we haver to define render and must return jsx!!
   render() {
