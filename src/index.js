@@ -32,22 +32,32 @@ class App extends React.Component {
   constructor(props) {
     super(props); // super a reference to the parents constructor functions
     // this is the only time we do a direct assingment to this.state
-    this.state = { lat: null }; // we don't know the latitude yet so we need a place holder number with null
+    // must be called this.state
+    this.state = { lat: null, errMessage: "" }; // we don't know the latitude yet so we need a place holder number with null
 
     window.navigator.geolocation.getCurrentPosition(
       (position) => {
-        // we called setState
+        console.log(position.coords.latitude);
+        // we called setState this does not run untill after we fetch our information
         this.setState({ lat: position.coords.latitude });
       },
-      (err) => console.log(err),
+      (err) => {
+        this.setState({ errMessage: err.message });
+      },
       // we do not do this.
       //this.state.lat = position.coords.latitude;
     );
   }
 
-  // React says we haver to define render!!
+  // React says we haver to define render and must return jsx!!
   render() {
-    return <div>{this.state.lat} </div>;
+    if (this.state.errMessage && !this.state.lat) {
+      return <div> err: {this.state.errMessage}</div>;
+    }
+    if (!this.state.errMessage && this.state.lat) {
+      return <div> Latitude: {this.state.lat} </div>;
+    }
+    return <div>Loading.....</div>;
   }
 }
 
