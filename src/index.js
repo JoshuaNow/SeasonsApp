@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SeasonDisplay from "./SeasonDisplay";
+import Spinner from "./Spinner";
 
 // rules of creating a class components
 // 1. Must be a JavaScript Class // not classes like oop
@@ -70,7 +71,7 @@ class App extends React.Component {
         </div>
       );
     }
-    return <div>Loading.....</div>;
+    return <Spinner />;
   }
 }
 
