@@ -59,7 +59,9 @@ class App extends React.Component {
   //   }
 
   // React says we have to define render and must return jsx!!
-  render() {
+
+  // helper function
+  renderContent() {
     if (this.state.errMessage && !this.state.lat) {
       return <div> err: {this.state.errMessage}</div>;
     }
@@ -72,6 +74,9 @@ class App extends React.Component {
       );
     }
     return <Spinner message="Please accept location request" />;
+  }
+  render() {
+    return <div className="border red">{this.renderContent()}</div>;
   }
 }
 
